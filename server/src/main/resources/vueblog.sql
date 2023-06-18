@@ -208,6 +208,31 @@ INSERT INTO `roles_user` VALUES ('128', '2', '10');
 INSERT INTO `roles_user` VALUES ('129', '5', '10');
 INSERT INTO `roles_user` VALUES ('130', '1', '6');
 
+
+
+
+
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions` (
+                               `id` int(11) NOT NULL AUTO_INCREMENT,
+                               `name` varchar(32) DEFAULT NULL,
+                               PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `roles_permissions`;
+CREATE TABLE `roles_permissions` (
+                                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                                     `rid` int(11) DEFAULT NULL,
+                                     `pid` int(11) DEFAULT NULL,
+                                     PRIMARY KEY (`id`),
+                                     KEY `rid` (`rid`),
+                                     KEY `pid` (`pid`),
+                                     CONSTRAINT `roles_permissions_ibfk_1` FOREIGN KEY (`rid`) REFERENCES `roles` (`id`),
+                                     CONSTRAINT `roles_permissions_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `permissions` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
 -- ----------------------------
 -- Table structure for tags
 -- ----------------------------
