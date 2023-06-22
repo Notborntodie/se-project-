@@ -24,18 +24,24 @@
     <el-col>
       <div style="text-align: left" v-html="article.htmlContent">
       </div>
+    
     </el-col>
   </el-row>
 </template>
 <script>
   import {getRequest} from '../utils/api'
+  
   export default{
+
+    
+    
     methods: {
       goBack(){
         this.$router.go(-1);
       }
     },
     mounted: function () {
+    
       var aid = this.$route.query.aid;
       this.activeName = this.$route.query.an
       var _this = this;

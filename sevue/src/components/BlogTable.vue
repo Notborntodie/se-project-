@@ -12,7 +12,7 @@
   <div>
     <div style="display: flex;justify-content: flex-start">
       <el-input
-        placeholder="通过标题搜索该分类下的博客..."
+        placeholder="通过标题搜索该分类下的文章..."
         prefix-icon="el-icon-search"
         v-model="keywords" style="width: 400px" size="mini">
       </el-input>
@@ -91,8 +91,10 @@
 //  var bus = new Vue()
 
   export default{
+
     data() {
       return {
+        // login:"",
         articles: [],
         selItems: [],
         loading: false,
@@ -103,7 +105,11 @@
         dustbinData: []
       }
     },
+    
     mounted: function () {
+    // alert("keyword "+this.keywords)
+    if(this.keywords=undefined) this.keywords="";
+        // alert("keyword "+this.keywords)
       var _this = this;
       this.loading = true;
       this.loadBlogs(1, this.pageSize);
@@ -115,10 +121,14 @@
     },
     methods: {
       searchClick(){
+        // alert(this.keywords)
         this.loadBlogs(1, this.pageSize);
       },
       itemClick(row){
-        this.$router.push({path: '/blogDetail', query: {aid: row.id}})
+        // alert( this.login+'/blogDetail')
+        if(this.unlogin){
+        this.$router.push({path: '/index/blogDetail', query: {aid: row.id}})}
+        else  this.$router.push({path: '/blogDetail', query: {aid: row.id}})
       },
       deleteMany(){
         var selItems = this.selItems;
@@ -134,8 +144,10 @@
         this.loadBlogs(currentPage, this.pageSize);
       },
       loadBlogs(page, count){
+        if (this.keywords==undefined) {this.keywords=""};
         var _this = this;
         var url = '';
+        // alert("key"this.keywords)
         if (this.state == -2) {
           url = "/admin/article/all" + "?page=" + page + "&count=" + count + "&keywords=" + this.keywords;
         } else {
@@ -146,6 +158,7 @@
           if (resp.status == 200) {
             _this.articles = resp.data.articles;
             _this.totalCount = resp.data.totalCount;
+
           } else {
             _this.$message({type: 'error', message: '数据加载失败!'});
           }
@@ -239,6 +252,6 @@
         });
       }
     },
-    props: ['state', 'showEdit', 'showDelete', 'activeName', 'showRestore']
+    props: ['unlogin','state', 'showEdit', 'showDelete', 'activeName', 'showRestore']
   }
 </script>

@@ -42,6 +42,7 @@ public class LoginRegController {
     @PostMapping("/reg")
     public RespBean reg(User user) {
         int result = userService.reg(user);
+        System.out.println(user.getUsername());
         if (result == 0) {
             //成功
             return new RespBean("success", "注册成功!");

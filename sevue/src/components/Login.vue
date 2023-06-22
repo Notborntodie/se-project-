@@ -44,6 +44,10 @@
         <el-form-item>
           <el-button type="primary" @click.native.prevent="submitClick">登录</el-button>
         </el-form-item>
+        <el-form-item>
+        <el-button type="primary" @click.native.prevent="register">注册</el-button>
+        </el-form-item>
+
       </el-form>
     </div>
   </div>
@@ -80,7 +84,11 @@
 <script>
   import {postRequest} from '../utils/api'
   import {putRequest} from '../utils/api'
+  import { getRequest } from '../utils/api'
   export default{
+    mounted(){
+      // alert("login")
+    },
     data(){
       return {
         rules: {
@@ -89,13 +97,16 @@
         },
         checked: true,
         loginForm: {
-          username: 'sang',
+          username: 'Yan',
           password: '123'
         },
         loading: false
       }
     },
     methods: {
+      register () {
+        this.$router.push({path: '/register'})
+      },
       submitClick: function () {
         var _this = this;
         this.loading = true;
@@ -108,7 +119,13 @@
             //成功
             var json = resp.data;
             if (json.status == 'success') {
-              _this.$router.replace({path: '/home'});
+              const res=getRequest('/isAdmin');
+              if (res.data===true){
+                _this.$router.replace({path: '/home'});
+              ///_this.$router.replace({path: '/home'});
+              }else{
+                _this.$router.replace({path: '/index'});
+              }
             } else {
               _this.$alert('登录失败!', '失败!');
             }

@@ -1,6 +1,6 @@
 <template>
   <el-container v-loading="loading" class="post-article">
-    <el-header class="header">
+    <el-header style="background-image: none;" class="header">
       <el-select v-model="article.cid" placeholder="请选择文章栏目" style="width: 150px;">
         <el-option
           v-for="item in categories"
@@ -27,7 +27,7 @@
         @keyup.enter.native="handleInputConfirm"
         @blur="handleInputConfirm">
       </el-input>
-      <el-button v-else class="button-new-tag" type="primary" size="small" @click="showInput">+Tag</el-button>
+      <el-button v-else class="button-new-tag" size="small" @click="showInput">+Tag</el-button>
     </el-header>
     <el-main class="main">
       <div id="editor">
